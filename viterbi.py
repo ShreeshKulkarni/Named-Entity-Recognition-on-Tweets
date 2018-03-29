@@ -27,8 +27,8 @@ def run_viterbi(emission_scores, trans_scores, start_scores, end_scores):
     - Start transition scores (S -> Y), as an Lx1 array
     - End transition scores (Y -> E), as an Lx1 array
 
-    You have to return a tuple (s,y), where:
-    - s is the score of the best sequence
+    You have to return a tuple (best_score, y), where:
+    - best_score is the score of the best sequence
     - y is a size N array of integers representing the best sequence.
     """
     L = start_scores.shape[0]
@@ -66,9 +66,9 @@ def run_viterbi(emission_scores, trans_scores, start_scores, end_scores):
     # rest of the columns
     for i in range(1,N):
         for t in range(L):
-            table[(t,i)] = -sys.maxint      # Initialization to find max value
+            table[(t,i)] = -sys.maxint          # Initialization to find max value
 
-            for t_prev in range(L):         # loop over all previous tags
+            for t_prev in range(L):             # loop over all previous tags
                 temp_score = table[(t_prev, i-1)] + trans_scores[t_prev][t] + emission_scores[i][t]
                 if temp_score > table[(t,i)]:
                     table[(t, i)] = temp_score  # update the entry
@@ -76,16 +76,14 @@ def run_viterbi(emission_scores, trans_scores, start_scores, end_scores):
             #table[(t, i)] += emission_scores[i][t]
 
     # last tag -> end of sentence
-    best_tag = 0                # dummy initialization
-    best_score = -sys.maxint    # Initialization to find max value
-    for t_prev in range(L):     # loop over tags of last word
+    best_tag = 0                                # dummy initialization
+    best_score = -sys.maxint                    # Initialization to find max value
+    for t_prev in range(L):                     # loop over tags of last word
         temp_score = table[(t_prev, N - 1)] + end_scores[t_prev]
         if temp_score > best_score:
             best_score = temp_score             # update best_score
             backtrack[(0, int(N))] = t_prev     # add backpointer
             best_tag = t_prev                   # update best_tag
-
-    #best_score = table[(0, N)]
 
     # backtracking to find the best_sequence y
     for i in range(N-1, -1, -1):
