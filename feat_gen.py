@@ -4,7 +4,7 @@ def parse_files(files):
     B_SET = set()
     I_SET = set()
     for file in files:
-        with open('./data/lexicon/'+file, 'r') as f:
+        with open('./data/'+file, 'r') as f:
             for line in f.readlines():
                 tokens = line.split()
                 if tokens:
@@ -20,8 +20,8 @@ def parse_files(files):
 def preprocess_corpus(train_sents):
     """Pre-process annotated tweets and build suitable sets.
 	
-	Called one-time only at start-up.
-	"""
+    Called one-time only at start-up.
+    """
 	
     global B_COMPANY, I_COMPANY, B_FACILITY, I_FACILITY, B_GEO, I_GEO, B_MOVIE, I_MOVIE, B_MUSIC_ARTIST, I_MUSIC_ARTIST
     global B_PERSON, I_PERSON, B_PROD, I_PROD, B_SPORTSTEAM, I_SPORTSTEAM, B_TVSHOW, I_TVSHOW, OTHER
@@ -35,13 +35,13 @@ def preprocess_corpus(train_sents):
     B_TVSHOW, I_TVSHOW = parse_files(['tv.tv_program'])
 
     for file in ['firstname.5k']:
-        with open('./data/lexicon/'+file, 'r') as f:
+        with open('./data/'+file, 'r') as f:
             for line in f.readlines():
                 token = line.strip()
                 if token:
                     B_PERSON.add(token.lower())
     for file in ['lastname.5000','people.family_name','people.person.lastnames']:
-        with open('./data/lexicon/'+file, 'r') as f:
+        with open('./data/'+file, 'r') as f:
             for line in f.readlines():
                 token = line.strip()
                 if token:
@@ -49,7 +49,7 @@ def preprocess_corpus(train_sents):
 
     OTHER = set()
     for file in ['english.stop','lower.10000']:
-        with open('./data/lexicon/'+file, 'r') as f:
+        with open('./data/'+file, 'r') as f:
             for line in f.readlines():
                 token = line.strip()
                 if token:
@@ -186,8 +186,8 @@ def token2features(sent, i, add_neighs = True):
 if __name__ == "__main__":
     sents = [
     [ "I", "love", "comics" ],
-	[ "Nokia", "announces", "a", "new", "launch" ],
-	[ "Alexander", "built", "this", "library" ]
+    [ "Nokia", "announces", "a", "new", "launch" ],
+    [ "Alexander", "built", "this", "library" ]
     ]
     preprocess_corpus(sents)
     for sent in sents:
