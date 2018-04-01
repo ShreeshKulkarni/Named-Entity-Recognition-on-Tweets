@@ -28,4 +28,4 @@ viterbi.py returns a tuple (best_score, y) where best_score is the score of the 
 
 Acknowledgements
 ----------------
-The starter code for this project and the lexicon input data files (annotated tweets) were provided as part of CSCI 544:Applied NLP class at USC.
+The starter code for this project (NOT uploaded in the repo) and the lexicon input data files (annotated tweets) were provided as part of CSCI 544:Applied NLP class at USC.
